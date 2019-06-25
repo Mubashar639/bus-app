@@ -17,7 +17,7 @@ class Busses extends Component {
   };
 
   componentDidMount() {
-    fetch("http://192.168.100.32:5000/booking/vehicles")
+    fetch("http://192.168.100.31:5000/booking/vehicles")
       .then(resp => {
         return resp.json();
       })
@@ -27,32 +27,17 @@ class Busses extends Component {
   }
 
   render() {
+    const a = this.props.navigation.getParam("data");
+    const data = {
+      from: a.from,
+      to: a.to,
+      time: a.time,
+      date: a.date,
+      seats: a.seats
+    };
     return (
       <Container>
         <Content padder>
-          <Card>
-            <CardItem>
-              <Body>
-                <Text>Bus Name</Text>
-              </Body>
-            </CardItem>
-            <CardItem cardBody>
-              <Image
-                source={{
-                  uri:
-                    "https://wexfordbus.com/web/app/uploads/2016/09/our-buses.jpg"
-                }}
-                style={{ height: 300, width: null, flex: 1 }}
-              />
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button>
-                  <Text>Select</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
           {this.state.busses.map((bus, i) => (
             <Card key={i}>
               <CardItem>
@@ -68,7 +53,11 @@ class Busses extends Component {
               </CardItem>
               <CardItem>
                 <Left>
-                  <Button>
+                  <Button
+                    onPress={() =>
+                      this.props.navigation.navigate("Seats", { data })
+                    }
+                  >
                     <Text>Select</Text>
                   </Button>
                 </Left>

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const bookingSchema = new Schema({
+const ticketSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     red: "User"
@@ -17,11 +17,9 @@ const bookingSchema = new Schema({
   },
   time: String,
   date: String,
-  address: String,
-  seats: String,
-  type: String
+  seats: Array
 });
 
-const Booking = mongoose.model("Booking", bookingSchema);
+const Ticket = mongoose.model("Ticket", ticketSchema);
 
-module.exports = Booking;
+module.exports = Ticket;

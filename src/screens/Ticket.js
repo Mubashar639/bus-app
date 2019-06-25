@@ -11,19 +11,19 @@ import {
   Text
 } from "native-base";
 
-class Booking extends Component {
+class Ticket extends Component {
   state = {
     bookings: []
   };
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("ride", "Bookings")
+      title: navigation.getParam("ride", "Tickets")
     };
   };
 
   componentDidMount() {
-    fetch("http://192.168.100.31:5000/booking")
+    fetch("http://192.168.100.31:5000/booking/ticket")
       .then(res => res.json())
       .then(res => this.setState({ bookings: res }))
       .catch(err => console.log(err));
@@ -31,7 +31,7 @@ class Booking extends Component {
 
   handleDelete = id => {
     axios
-      .delete(`http://192.168.100.31:5000/booking/${id}`)
+      .delete(`http://192.168.100.31:5000/booking/ticket/${id}`)
       .then(res => this.setState({ bookings: res.data }))
       .catch(err => console.log(err));
   };
@@ -60,18 +60,10 @@ class Booking extends Component {
               </CardItem>
               <CardItem>
                 <Left>
-                  <Text>Address</Text>
-                </Left>
-                <Body>
-                  <Text>{booking.address}</Text>
-                </Body>
-              </CardItem>
-              <CardItem>
-                <Left>
                   <Text>Seats</Text>
                 </Left>
                 <Body>
-                  <Text>{booking.seats}</Text>
+                  <Text>{booking.seats.join(", ")}</Text>
                 </Body>
               </CardItem>
               <CardItem footer>
@@ -87,4 +79,4 @@ class Booking extends Component {
   }
 }
 
-export default Booking;
+export default Ticket;

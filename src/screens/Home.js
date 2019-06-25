@@ -64,12 +64,11 @@ class Home extends Component {
           />
           <Button
             title='Booking'
-            onPress={() => {
-              this.setState({ selected: "local" });
+            onPress={
               this.props.auth.isAuthenticated
-                ? this.setState({ overlay3: true })
-                : this.props.navigation.navigate("Auth");
-            }}
+                ? () => this.props.navigation.navigate("Booking")
+                : () => this.props.navigation.navigate("Auth")
+            }
             titleStyle={{ fontSize: 19 }}
             buttonStyle={{
               width: 100,
@@ -80,8 +79,13 @@ class Home extends Component {
           />
           <Button
             title='Ticket'
-            onPress={() =>
-              this.props.navigation.navigate("Detail", { ride: "Buy Ticket" })
+            onPress={
+              this.props.auth.isAuthenticated
+                ? () =>
+                    this.props.navigation.navigate("Detail", {
+                      ride: "Buy Ticket"
+                    })
+                : () => this.props.navigation.navigate("Auth")
             }
             titleStyle={{ fontSize: 19 }}
             buttonStyle={{

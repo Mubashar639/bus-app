@@ -1,4 +1,9 @@
 {
+  "rnpm": {
+    "assets": [
+      "resources/fonts"
+    ]
+  },
   "name": "busbros",
   "version": "0.0.1",
   "private": true,

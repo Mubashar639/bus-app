@@ -5,6 +5,8 @@ import DetailScreen from "../screens/Detail";
 import BookingScreen from "../screens/Booking";
 import AuthScreen from "../screens/AuthScreen";
 import BussesScreen from "../screens/Busses";
+import SeatsScreen from "../screens/Seats";
+import TicketScreen from "../screens/Ticket";
 
 const StackNavigation = createStackNavigator(
   {
@@ -12,7 +14,9 @@ const StackNavigation = createStackNavigator(
     Detail: DetailScreen,
     Booking: BookingScreen,
     Auth: AuthScreen,
-    Busses: BussesScreen
+    Busses: BussesScreen,
+    Seats: SeatsScreen,
+    Ticket: TicketScreen
   },
   {
     initialRouteName: "Home",
