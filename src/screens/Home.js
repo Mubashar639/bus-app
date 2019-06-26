@@ -158,7 +158,10 @@ class Home extends Component {
                 }}
                 onPress={() => {
                   this.setState({ overlay1: false, overlay2: false });
-                  this.props.navigation.navigate("Detail", { ride: "Bus" });
+                  this.props.navigation.navigate("Detail", {
+                    ride: "Bus",
+                    local: this.state.selected
+                  });
                 }}
               />
               <Button
@@ -172,7 +175,10 @@ class Home extends Component {
                 }}
                 onPress={() => {
                   this.setState({ overlay1: false, overlay2: false });
-                  this.props.navigation.navigate("Detail", { ride: "Car" });
+                  this.props.navigation.navigate("Detail", {
+                    ride: "Car",
+                    local: this.state.selected
+                  });
                 }}
               />
               {this.state.selected === "local" ? (
@@ -188,7 +194,8 @@ class Home extends Component {
                   onPress={() => {
                     this.setState({ overlay1: false, overlay2: false });
                     this.props.navigation.navigate("Detail", {
-                      ride: "Rickshaw"
+                      ride: "Rickshaw",
+                      local: this.state.selected
                     });
                   }}
                 />

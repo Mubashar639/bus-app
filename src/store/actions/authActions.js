@@ -8,7 +8,7 @@ import { GET_ERRORS, SET_CURRENT_USER, REGISTER } from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("http://192.168.100.32:5000/user/register", userData)
+    .post("http://192.168.100.31:5000/user/register", userData)
     .then(res => dispatch({ type: REGISTER, payload: res.data }))
     .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
 };
@@ -16,7 +16,7 @@ export const registerUser = (userData, history) => dispatch => {
 // Get Login User Toke
 export const loginUser = userData => dispatch => {
   axios
-    .post("http://192.168.100.32:5000/user/login", userData)
+    .post("http://192.168.100.31:5000/user/login", userData)
     .then(res => {
       const { token } = res.data;
       try {
