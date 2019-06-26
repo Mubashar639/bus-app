@@ -6,6 +6,7 @@ import { View, Text, Picker, Radio, Button } from "native-base";
 import DateTimePicker from "react-native-modal-datetime-picker";
 
 import cities from "../assets/cities";
+import localSites from "../assets/local";
 
 class Detail extends Component {
   state = {
@@ -45,6 +46,7 @@ class Detail extends Component {
 
   render() {
     const ride = this.props.navigation.getParam("ride");
+    const local = this.props.navigation.getParam("local");
     const cities2 = cities.filter(city => city !== this.state.from);
     return (
       <ImageBackground
@@ -64,17 +66,31 @@ class Detail extends Component {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={{ width: "30%", marginTop: 13 }}>From</Text>
-            <Picker
-              mode='dropdown'
-              selectedValue={this.state.from}
-              onValueChange={value => this.setState({ from: value })}
-              style={{ width: "70%" }}
-            >
-              <Picker.Item label='Select Your City' value='select' />
-              {cities.map((city, i) => (
-                <Picker.Item label={city} value={city} key={i} />
-              ))}
-            </Picker>
+            {local === "local" ? (
+              <Picker
+                mode='dropdown'
+                selectedValue={this.state.from}
+                onValueChange={value => this.setState({ from: value })}
+                style={{ width: "70%" }}
+              >
+                <Picker.Item label='Select' value='select' />
+                {localSites.map((city, i) => (
+                  <Picker.Item label={city} value={city} key={i} />
+                ))}
+              </Picker>
+            ) : (
+              <Picker
+                mode='dropdown'
+                selectedValue={this.state.from}
+                onValueChange={value => this.setState({ from: value })}
+                style={{ width: "70%" }}
+              >
+                <Picker.Item label='Select Your City' value='select' />
+                {cities.map((city, i) => (
+                  <Picker.Item label={city} value={city} key={i} />
+                ))}
+              </Picker>
+            )}
           </View>
           <View
             style={{
@@ -84,18 +100,32 @@ class Detail extends Component {
             }}
           >
             <Text style={{ width: "30%", marginTop: 13 }}>To</Text>
-            <Picker
-              mode='dropdown'
-              selectedValue={this.state.to}
-              onValueChange={value => this.setState({ to: value })}
-              style={{ width: "70%" }}
-              enabled={this.state.from === "select" ? false : true}
-            >
-              <Picker.Item label='Select Your Destination' value='select' />
-              {cities2.map((city, i) => (
-                <Picker.Item label={city} value={city} key={i} />
-              ))}
-            </Picker>
+            {local === "local" ? (
+              <Picker
+                mode='dropdown'
+                selectedValue={this.state.to}
+                onValueChange={value => this.setState({ to: value })}
+                style={{ width: "70%" }}
+              >
+                <Picker.Item label='Select' value='select' />
+                {localSites.map((city, i) => (
+                  <Picker.Item label={city} value={city} key={i} />
+                ))}
+              </Picker>
+            ) : (
+              <Picker
+                mode='dropdown'
+                selectedValue={this.state.to}
+                onValueChange={value => this.setState({ to: value })}
+                style={{ width: "70%" }}
+                enabled={this.state.from === "select" ? false : true}
+              >
+                <Picker.Item label='Select Your Destination' value='select' />
+                {cities2.map((city, i) => (
+                  <Picker.Item label={city} value={city} key={i} />
+                ))}
+              </Picker>
+            )}
           </View>
           {ride !== "Buy Ticket" ? (
             <View

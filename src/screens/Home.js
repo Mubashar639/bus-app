@@ -208,6 +208,7 @@ class Home extends Component {
                     this.setState({ overlay1: false, overlay2: false });
                     this.props.navigation.navigate("Detail", {
                       ride: "Bus",
+                      ride: "Rickshaw",
                       local: this.state.selected
                     });
                   }}
