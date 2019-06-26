@@ -8,6 +8,7 @@ const validateLoginInput = require("../validation/loginValidation");
 
 // Register User
 exports.registerUser = (req, res) => {
+  console.log("i am class");
   const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) {
     return res.status(400).json(errors);

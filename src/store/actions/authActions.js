@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-community/async-storage";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { baseUrl } from "../../shared";
 
 import setAuthToken from "../../utils/setAuthToken";
 import { GET_ERRORS, SET_CURRENT_USER, REGISTER } from "./types";
@@ -8,15 +9,15 @@ import { GET_ERRORS, SET_CURRENT_USER, REGISTER } from "./types";
 // Register User
 export const registerUser = (userData, history) => dispatch => {
   axios
-    .post("http://192.168.100.32:5000/user/register", userData)
+    .post(baseUrl + "user/register", userData)
     .then(res => dispatch({ type: REGISTER, payload: res.data }))
-    .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+    .catch(err => {alert(err);dispatch({ type: GET_ERRORS, payload: err.response.data })});
 };
 
 // Get Login User Toke
 export const loginUser = userData => dispatch => {
   axios
-    .post("http://192.168.100.32:5000/user/login", userData)
+    .post(baseUrl + "user/login", userData)
     .then(res => {
       const { token } = res.data;
       try {

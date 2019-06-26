@@ -1,0 +1,2 @@
+[2019-06-24 14:05:23.632] [renderer1] [error] Error: Error: ENOENT: no such file or directory, stat '/home/aamir/buswala/.vscode'
+[2019-06-24 14:05:23.922] [renderer1] [error] net::ERR_INTERNET_DISCONNECTED: {1}
