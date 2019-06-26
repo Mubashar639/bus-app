@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { ImageBackground } from "react-native";
 import { Input, Slider } from "react-native-elements";
+import axios from "axios";
 import { View, Text, Picker, Radio, Button } from "native-base";
 import DateTimePicker from "react-native-modal-datetime-picker";
 
@@ -36,19 +37,10 @@ class Detail extends Component {
       type: this.state.type
     };
 
-    fetch("http://192.168.100.7:5000/booking/book", {
-      headers: {
-        "Content-Type": "application/json"
-      },
-      method: "POST",
-      body: JSON.stringify(data)
-    })
-      .then(resp => {
-        return resp.json();
-      })
-      .then(resp => {
-        alert("Booking Saved");
-      });
+    axios
+      .post("http://192.168.100.32:5000/booking/book", data)
+      .then(data => alert("booking saved"))
+      .catch(err => console.log(err));
   };
 
   render() {
@@ -216,21 +208,38 @@ class Detail extends Component {
               </View>
             </View>
           ) : null}
-          <Button
-            onPress={
-              ride === "Buy Ticket"
-                ? () => this.props.navigation.navigate("Busses")
-                : this.onValueSubmit
-            }
-            style={{
-              marginLeft: "auto",
-              marginRight: "auto",
-              marginTop: 20,
-              backgroundColor: "#403E3E"
-            }}
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
           >
-            <Text> {ride === "Buy Ticket" ? "Find Bus" : "Submit"} </Text>
-          </Button>
+            <Button
+              onPress={
+                ride === "Buy Ticket"
+                  ? () =>
+                      this.props.navigation.navigate("Busses", {
+                        data: this.state
+                      })
+                  : this.onValueSubmit
+              }
+              style={{
+                backgroundColor: "#403E3E",
+                marginTop: 30,
+                marginRight: 30
+              }}
+            >
+              <Text> {ride === "Buy Ticket" ? "Find Bus" : "Submit"} </Text>
+            </Button>
+            {ride === "Buy Ticket" ? (
+              <Button
+                style={{
+                  backgroundColor: "#403E3E",
+                  marginTop: 30
+                }}
+                onPress={() => this.props.navigation.navigate("Ticket")}
+              >
+                <Text>Tickets</Text>
+              </Button>
+            ) : null}
+          </View>
         </View>
       </ImageBackground>
     );

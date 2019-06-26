@@ -25,27 +25,26 @@ class Home extends Component {
     this.drawer._root.open();
   };
 
-
   componentDidMount() {
     this.props.dispatch(getComments());
   }
-  
 
   render() {
     return (
-      <ImageBackground
-        source={require("../assets/main.png")}
-        style={{ width: "100%", height: "100%" }}
-        imageStyle={{ opacity: 0.5, resizeMode: "contain" }}
+      <Drawer
+        type="overlay"
+        onOpen={this.openDrawer}
+        onClose={this.closeDrawer}
+        ref={ref => {
+          this.drawer = ref;
+        }}
+        content={<DrawerContent {...this.props} />}
       >
-        <Drawer
-          type="overlay"
-          onOpen={this.openDrawer}
-          onClose={this.closeDrawer}
-          ref={ref => {
-            this.drawer = ref;
-          }}
-          content={<DrawerContent {...this.props} />}
+        />
+        <ImageBackground
+          source={require("../assets/main.png")}
+          style={{ width: "100%", height: "100%" }}
+          imageStyle={{ opacity: 0.5, resizeMode: "contain" }}
         >
           <View
             style={{
@@ -55,23 +54,22 @@ class Home extends Component {
               alignItems: "center",
               flexWrap: "wrap"
             }}
-          >
-            <Button
-              onPress={this.openDrawer}
-              icon={{
-                name: "bars",
-                type: "font-awesome",
-                color: "#fff",
-                size: 30
-              }}
-              buttonStyle={{
-                width: 100,
-                height: 100,
-                borderRadius: 50,
-                backgroundColor: "#403E3E"
-              }}
-            />
-          </View>
+          />
+          <Button
+            onPress={this.openDrawer}
+            icon={{
+              name: "bars",
+              type: "font-awesome",
+              color: "#fff",
+              size: 30
+            }}
+            buttonStyle={{
+              width: 100,
+              height: 100,
+              borderRadius: 50,
+              backgroundColor: "#403E3E"
+            }}
+          />
           <View
             style={{
               flex: 1,
@@ -114,12 +112,11 @@ class Home extends Component {
             />
             <Button
               title="Booking"
-              onPress={() => {
-                this.setState({ selected: "local" });
+              onPress={
                 this.props.auth.isAuthenticated
-                  ? this.setState({ overlay3: true })
-                  : this.props.navigation.navigate("Auth");
-              }}
+                  ? () => this.props.navigation.navigate("Booking")
+                  : () => this.props.navigation.navigate("Auth")
+              }
               titleStyle={{ fontSize: 19 }}
               buttonStyle={{
                 width: 100,
@@ -130,8 +127,13 @@ class Home extends Component {
             />
             <Button
               title="Ticket"
-              onPress={() =>
-                this.props.navigation.navigate("Detail", { ride: "Buy Ticket" })
+              onPress={
+                this.props.auth.isAuthenticated
+                  ? () =>
+                      this.props.navigation.navigate("Detail", {
+                        ride: "Buy Ticket"
+                      })
+                  : () => this.props.navigation.navigate("Auth")
               }
               titleStyle={{ fontSize: 19 }}
               buttonStyle={{
@@ -204,7 +206,10 @@ class Home extends Component {
                   }}
                   onPress={() => {
                     this.setState({ overlay1: false, overlay2: false });
-                    this.props.navigation.navigate("Detail", { ride: "Bus" });
+                    this.props.navigation.navigate("Detail", {
+                      ride: "Bus",
+                      local: this.state.selected
+                    });
                   }}
                 />
                 <Button
@@ -218,7 +223,10 @@ class Home extends Component {
                   }}
                   onPress={() => {
                     this.setState({ overlay1: false, overlay2: false });
-                    this.props.navigation.navigate("Detail", { ride: "Car" });
+                    this.props.navigation.navigate("Detail", {
+                      ride: "Car",
+                      local: this.state.selected
+                    });
                   }}
                 />
                 {this.state.selected === "local" ? (
@@ -234,7 +242,8 @@ class Home extends Component {
                     onPress={() => {
                       this.setState({ overlay1: false, overlay2: false });
                       this.props.navigation.navigate("Detail", {
-                        ride: "Rickshaw"
+                        ride: "Rickshaw",
+                        local: this.state.selected
                       });
                     }}
                   />
@@ -298,8 +307,8 @@ class Home extends Component {
               </View>
             </Overlay>
           </View>
-        </Drawer>
-      </ImageBackground>
+        </ImageBackground>
+      </Drawer>
     );
   }
 }
